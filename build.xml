@@ -1,29 +1,13 @@
-<project name="testing" default="Builds">
+<project name="testing" default="UpdateConnection">
 
-<taskdef resource="net/sf/antcontrib/antlib.xml"/>
-  
+<property file="C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/AntJobtoContinuousImport_4/Update.properties"/>
+ 
 
-
-<target name="Builds">
-
-<property name="Files" value="C:\Windows\System32\config\systemprofile\AppData\Local\Jenkins\.jenkins\workspace\AntJobtoContinuousImport_4"/>
-  <for param="File" keepgoing="true">
-    
-    <path>
-    
-    <fileset dir="${Files}" casesensitive="yes">
-      <include name="**/*.xml"/>
-    </fileset>
-      
-      </path>
-    
-    <sequential>
-    <ant antfile="@{File}"/>
-    </sequential>
-    
-  </for>
-  
-  
+<target name="UpdateConnection">
+<exec executable="curl">
+ <arg line = "curl -X POST -u ${USERNAME_PASSWORD} -H Content-Type:application/json -H X-HTTP-Method-Override:PATCH -d @${JSON_Location_Connection} https://oicintegrationinstance-bmcg1bx14wqj-bo.integration.ocp.oraclecloud.com/ic/api/integration/v1/connections/${DB}"
+/>
+</exec>
 </target>
 
 </project>
